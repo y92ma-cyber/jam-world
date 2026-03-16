@@ -1,0 +1,56 @@
+{
+  "Am": {
+    "recommended": [
+      {
+        "name": "A Minor Pentatonic",
+        "notes": ["A","C","D","E","G"],
+        "avoid": [],
+        "description": "Safe over any Am chord. Blues and rock staple."
+      },
+      {
+        "name": "A Dorian",
+        "notes": ["A","B","C","D","E","F#","G"],
+        "avoid": [],
+        "description": "Add the F# for a jazzier, funkier sound."
+      },
+      {
+        "name": "A Natural Minor",
+        "notes": ["A","B","C","D","E","F","G"],
+        "avoid": [],
+        "description": "Classic minor sound. Works over Am, F, C, G."
+      }
+    ]
+  },
+  "Am F C G": {
+    "recommended": [
+      {
+        "name": "A Natural Minor / C Major",
+        "notes": ["A","B","C","D","E","F","G"],
+        "avoid": [],
+        "description": "One scale covers all 4 chords. Relative major/minor."
+      },
+      {
+        "name": "A Dorian",
+        "notes": ["A","B","C","D","E","F#","G"],
+        "avoid": ["F#-over-F"],
+        "description": "Funkier colour. Avoid F# when F chord is playing."
+      }
+    ]
+  },
+  "default": {
+    "recommended": [
+      {
+        "name": "Major Pentatonic",
+        "notes": ["C","D","E","G","A"],
+        "avoid": [],
+        "description": "Works over most major chord progressions."
+      },
+      {
+        "name": "Minor Pentatonic",
+        "notes": ["A","C","D","E","G"],
+        "avoid": [],
+        "description": "Works over most minor chord progressions."
+      }
+    ]
+  }
+}

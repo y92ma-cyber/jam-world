@@ -1,0 +1,123 @@
+{
+  "Am": {
+    "type": "Minor",
+    "notes": ["A", "C", "E"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "0", "2", "2", "1", "0"], "baseFret": 1 },
+      { "label": "Barre 5fr", "strings": ["5", "7", "7", "5", "5", "5"], "baseFret": 5 }
+    ]
+  },
+  "F": {
+    "type": "Major",
+    "notes": ["F", "A", "C"],
+    "voicings": [
+      { "label": "Barre 1fr", "strings": ["1", "3", "3", "2", "1", "1"], "baseFret": 1 },
+      { "label": "Mini F", "strings": ["x", "x", "3", "2", "1", "1"], "baseFret": 1 }
+    ]
+  },
+  "C": {
+    "type": "Major",
+    "notes": ["C", "E", "G"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "3", "2", "0", "1", "0"], "baseFret": 1 }
+    ]
+  },
+  "G": {
+    "type": "Major",
+    "notes": ["G", "B", "D"],
+    "voicings": [
+      { "label": "Open", "strings": ["3", "2", "0", "0", "0", "3"], "baseFret": 1 }
+    ]
+  },
+  "Dm": {
+    "type": "Minor",
+    "notes": ["D", "F", "A"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "x", "0", "2", "3", "1"], "baseFret": 1 }
+    ]
+  },
+  "E": {
+    "type": "Major",
+    "notes": ["E", "G#", "B"],
+    "voicings": [
+      { "label": "Open", "strings": ["0", "2", "2", "1", "0", "0"], "baseFret": 1 }
+    ]
+  },
+  "Em": {
+    "type": "Minor",
+    "notes": ["E", "G", "B"],
+    "voicings": [
+      { "label": "Open", "strings": ["0", "2", "2", "0", "0", "0"], "baseFret": 1 }
+    ]
+  },
+  "A": {
+    "type": "Major",
+    "notes": ["A", "C#", "E"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "0", "2", "2", "2", "0"], "baseFret": 1 }
+    ]
+  },
+  "D": {
+    "type": "Major",
+    "notes": ["D", "F#", "A"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "x", "0", "2", "3", "2"], "baseFret": 1 }
+    ]
+  },
+  "Bb": {
+    "type": "Major",
+    "notes": ["Bb", "D", "F"],
+    "voicings": [
+      { "label": "Barre 1fr", "strings": ["1", "1", "3", "3", "3", "1"], "baseFret": 1 }
+    ]
+  },
+  "Am7": {
+    "type": "Minor 7th",
+    "notes": ["A", "C", "E", "G"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "0", "2", "0", "1", "0"], "baseFret": 1 }
+    ]
+  },
+  "Dm7": {
+    "type": "Minor 7th",
+    "notes": ["D", "F", "A", "C"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "x", "0", "2", "1", "1"], "baseFret": 1 }
+    ]
+  },
+  "G7": {
+    "type": "Dominant 7th",
+    "notes": ["G", "B", "D", "F"],
+    "voicings": [
+      { "label": "Open", "strings": ["3", "2", "0", "0", "0", "1"], "baseFret": 1 }
+    ]
+  },
+  "Cmaj7": {
+    "type": "Major 7th",
+    "notes": ["C", "E", "G", "B"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "3", "2", "0", "0", "0"], "baseFret": 1 }
+    ]
+  },
+  "Fmaj7": {
+    "type": "Major 7th",
+    "notes": ["F", "A", "C", "E"],
+    "voicings": [
+      { "label": "Barre", "strings": ["1", "3", "3", "2", "1", "0"], "baseFret": 1 }
+    ]
+  },
+  "E7": {
+    "type": "Dominant 7th",
+    "notes": ["E", "G#", "B", "D"],
+    "voicings": [
+      { "label": "Open", "strings": ["0", "2", "0", "1", "0", "0"], "baseFret": 1 }
+    ]
+  },
+  "A7": {
+    "type": "Dominant 7th",
+    "notes": ["A", "C#", "E", "G"],
+    "voicings": [
+      { "label": "Open", "strings": ["x", "0", "2", "0", "2", "0"], "baseFret": 1 }
+    ]
+  }
+}

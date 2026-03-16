@@ -1,0 +1,78 @@
+{
+  "funk": [
+    {
+      "name": "Root-5 Slap",
+      "description": "Classic funk slap: root on 1, ghost note on e, 5th on 3. Thumb down on roots (T), pop on 5ths (P).",
+      "tab": [
+        "G |-----------------|",
+        "D |-------5---------|",
+        "A |-T---x-T-P-x-----|",
+        "E |-----------------|"
+      ],
+      "feel": "16th note grid, heavy on 1 and 3"
+    },
+    {
+      "name": "16th Note Groove",
+      "description": "Syncopated 16ths. Root on 1, octave on the & of 2. Keep it tight.",
+      "tab": [
+        "G |-----------------|",
+        "D |-------8---------|",
+        "A |-5-x-x---x-5-x---|",
+        "E |-----------------|"
+      ],
+      "feel": "Tight, in-the-pocket, ghost notes everywhere"
+    }
+  ],
+  "blues": [
+    {
+      "name": "Shuffle Walk",
+      "description": "Walking bass line with shuffle feel. Root, 3rd, 5th, 6th.",
+      "tab": [
+        "G |-----------------|",
+        "D |-----2-4---------|",
+        "A |-0-2-------------|",
+        "E |-----------------|"
+      ],
+      "feel": "Triplet shuffle, relaxed"
+    }
+  ],
+  "rock": [
+    {
+      "name": "Root Octave Pump",
+      "description": "Power root on downbeats, octave fills. Lock with kick drum.",
+      "tab": [
+        "G |-----------------|",
+        "D |-------7---------|",
+        "A |-5---5-----------|",
+        "E |-----------------|"
+      ],
+      "feel": "Eighth notes, drive, lock with kick"
+    }
+  ],
+  "bossa": [
+    {
+      "name": "Bossa Two-Feel",
+      "description": "Root on 1, 5th on 3. Simple, melodic, in service of the harmony.",
+      "tab": [
+        "G |-----------------|",
+        "D |-------5---------|",
+        "A |-5---------------|",
+        "E |-----------------|"
+      ],
+      "feel": "Half-time feel, melodic, legato"
+    }
+  ],
+  "jazz": [
+    {
+      "name": "Walking Line",
+      "description": "Chromatic approach to each chord. Step-wise motion, quarter notes.",
+      "tab": [
+        "G |-----------------|",
+        "D |-----5-7---------|",
+        "A |-5-7-------------|",
+        "E |-----------------|"
+      ],
+      "feel": "Quarter note walk, chromatic approaches"
+    }
+  ]
+}

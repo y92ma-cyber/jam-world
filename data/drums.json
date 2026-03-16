@@ -1,0 +1,82 @@
+{
+  "funk": [
+    {
+      "name": "Standard Funk Groove",
+      "description": "Kick on 1 and the & of 3. Snare on 2 and 4. Hi-hat 16ths with ghost notes.",
+      "bars": 1,
+      "grid": {
+        "crash":  [1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
+        "hihat":  [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1],
+        "snare":  [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0],
+        "kick":   [1,0,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,0]
+      },
+      "beats": ["1","e","&","a","2","e","&","a","3","e","&","a","4","e","&","a"]
+    },
+    {
+      "name": "James Brown Groove",
+      "description": "Kick heavy on 1, snare cracks on 2 and 4. Open hi-hat on the & of 4.",
+      "bars": 1,
+      "grid": {
+        "crash":  [1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
+        "hihat":  [1,1,1,0, 1,1,1,0, 1,1,1,0, 1,1,1,1],
+        "snare":  [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0],
+        "kick":   [1,0,1,0, 0,0,0,0, 1,0,0,0, 0,0,0,0]
+      },
+      "beats": ["1","e","&","a","2","e","&","a","3","e","&","a","4","e","&","a"]
+    }
+  ],
+  "blues": [
+    {
+      "name": "Shuffle Groove",
+      "description": "Swing 8ths on hi-hat, snare on 2 and 4, kick on 1 and 3.",
+      "bars": 1,
+      "grid": {
+        "crash":  [1,0,0, 0,0,0, 0,0,0, 0,0,0],
+        "hihat":  [1,0,1, 1,0,1, 1,0,1, 1,0,1],
+        "snare":  [0,0,0, 1,0,0, 0,0,0, 1,0,0],
+        "kick":   [1,0,0, 0,0,0, 1,0,0, 0,0,0]
+      },
+      "beats": ["1","&t","&","2","&t","&","3","&t","&","4","&t","&"]
+    }
+  ],
+  "rock": [
+    {
+      "name": "Straight 8th Rock",
+      "description": "8th notes on hi-hat, snare 2 and 4, kick 1 and 3.",
+      "bars": 1,
+      "grid": {
+        "crash":  [1,0,0,0,0,0,0,0],
+        "hihat":  [1,1,1,1,1,1,1,1],
+        "snare":  [0,0,1,0,0,0,1,0],
+        "kick":   [1,0,0,0,1,0,0,0]
+      },
+      "beats": ["1","&","2","&","3","&","4","&"]
+    }
+  ],
+  "bossa": [
+    {
+      "name": "Bossa Nova",
+      "description": "Rim click pattern on snare. Kick on 1 and 3. Ride cymbal.",
+      "bars": 1,
+      "grid": {
+        "ride":   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+        "snare":  [0,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0],
+        "kick":   [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]
+      },
+      "beats": ["1","e","&","a","2","e","&","a","3","e","&","a","4","e","&","a"]
+    }
+  ],
+  "jazz": [
+    {
+      "name": "Jazz Ride Pattern",
+      "description": "Ride cymbal jazz pattern. Snare ghost notes. Kick 'feathered' on 1.",
+      "bars": 1,
+      "grid": {
+        "ride":   [1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1],
+        "snare":  [0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0],
+        "kick":   [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      },
+      "beats": ["1","e","&","a","2","e","&","a","3","e","&","a","4","e","&","a"]
+    }
+  ]
+}
