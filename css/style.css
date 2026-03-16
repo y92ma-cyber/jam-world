@@ -424,3 +424,47 @@ body::after {
   letter-spacing: 1px;
   margin-top: 8px;
 }
+
+/* ===== DRUMS TAB ===== */
+.drum-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.drum-card-name { font-size: 13px; color: var(--text); font-weight: bold; margin-bottom: 4px; letter-spacing: 1px; }
+.drum-card-desc { font-size: 11px; color: var(--text-muted); font-family: var(--font-sans); margin-bottom: 10px; line-height: 1.4; }
+.drum-grid { overflow-x: auto; }
+.drum-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.drum-row-label {
+  width: 28px;
+  font-size: 9px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+.drum-cells { display: flex; gap: 2px; }
+.drum-cell {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #222;
+  background: #111;
+  flex-shrink: 0;
+}
+.drum-cell.hit { background: var(--accent); border-color: var(--accent); }
+.drum-cell.downbeat { border-left-color: #444; }
+.beat-row .drum-cells { gap: 2px; }
+.drum-beat-label {
+  width: 16px;
+  font-size: 7px;
+  text-align: center;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+.drum-beat-label.strong { color: var(--text-muted); font-weight: bold; }
