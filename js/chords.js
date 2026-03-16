@@ -43,6 +43,7 @@ function promptAddChord() {
 }
 
 function removeChord(index) {
+  if (state.chords.length <= 1) return; // keep at least one chord
   const chords = state.chords.filter((_, i) => i !== index);
   const activeChordIndex = Math.max(0, Math.min(state.activeChordIndex ?? 0, chords.length - 1));
   setState({ chords, activeChordIndex });

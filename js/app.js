@@ -8,6 +8,7 @@ const DEFAULT_SESSION = {
   style: 'funk',
   bpm: 92,
   timeSignature: '4/4',
+  activeChordIndex: 0,
 };
 
 export let state = { ...DEFAULT_SESSION };
