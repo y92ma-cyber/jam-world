@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jam World</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-title">JAM WORLD</div>
+    <div class="app-subtitle" id="session-name">New Session</div>
+  </header>
+
+  <div class="chord-bar">
+    <span class="chord-bar-label">Progression</span>
+    <div class="chord-pills" id="chord-pills"></div>
+    <button class="chord-add" id="btn-add-chord" aria-label="Add chord">＋</button>
+  </div>
+
+  <div class="meta-bar">
+    <select class="meta-style" id="style-select">
+      <option value="funk">Funk</option>
+      <option value="blues">Blues</option>
+      <option value="rock">Rock</option>
+      <option value="bossa">Bossa Nova</option>
+      <option value="jazz">Jazz</option>
+    </select>
+    <div class="meta-bpm">
+      ♩ <input type="number" id="bpm-input" value="92" min="40" max="240"> BPM
+    </div>
+  </div>
+
+  <nav class="inst-tabs" id="inst-tabs" role="tablist">
+    <button class="inst-tab active" data-tab="guitar" role="tab">🎸 Guitar</button>
+    <button class="inst-tab" data-tab="bass" role="tab">🎸 Bass</button>
+    <button class="inst-tab" data-tab="drums" role="tab">🥁 Drums</button>
+    <button class="inst-tab" data-tab="keys" role="tab">🎹 Keys</button>
+    <button class="inst-tab" data-tab="scale" role="tab">🎵 Scale</button>
+  </nav>
+
+  <main class="content-area" id="content-area"></main>
+
+  <footer class="bottom-bar">
+    <button class="bottom-btn" id="btn-save">💾 Save</button>
+    <button class="bottom-btn" id="btn-load">📂 Load</button>
+    <button class="bottom-btn" id="btn-print">🖨 Print</button>
+    <button class="bottom-btn primary" id="btn-new">New Jam</button>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
