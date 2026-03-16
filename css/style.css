@@ -352,3 +352,14 @@ body::after {
   .chord-card-name { color: black; }
   .section-label { color: #666; border-color: #ccc; }
 }
+
+/* ===== GUITAR FRETBOARD ===== */
+.fretboard-svg { display: block; margin: 0 auto; }
+.chord-card-voicing-label {
+  font-size: 9px;
+  color: var(--text-dim);
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
