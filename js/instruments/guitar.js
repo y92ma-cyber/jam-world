@@ -27,10 +27,17 @@ export async function renderGuitar(container, state) {
     }
 
     const voicing = chord.voicings[0];
+    if (!voicing) {
+      card.innerHTML = `<div class="chord-card-name">${chordName}</div><div class="chord-card-type">${chord.type}</div>`;
+      grid.appendChild(card);
+      return;
+    }
+
+    const rootNote = chord.notes[0]; // first note is always the root
     card.innerHTML = `
       <div class="chord-card-name">${chordName}</div>
       <div class="chord-card-type">${chord.type}</div>
-      ${buildFretboardSVG(voicing)}
+      ${buildFretboardSVG(voicing, rootNote)}
       <div class="chord-card-voicing-label">${voicing.label}</div>
     `;
     grid.appendChild(card);
@@ -39,7 +46,27 @@ export async function renderGuitar(container, state) {
   container.appendChild(grid);
 }
 
-function buildFretboardSVG(voicing) {
+// Standard tuning: low E, A, D, G, B, high e (semitones from C, middle octave)
+const STRING_TUNING = [4, 9, 14, 19, 23, 28]; // E=4, A=9, D=14, G=19, B=23, e=28
+const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+// Enharmonic equivalents
+const ENHARMONIC = { 'Bb': 'A#', 'Eb': 'D#', 'Ab': 'G#', 'Db': 'C#', 'Gb': 'F#' };
+
+function noteAtString(stringIndex, fret) {
+  if (fret === 'x' || fret === '0') {
+    if (fret === 'x') return null;
+    return NOTE_NAMES[STRING_TUNING[stringIndex] % 12];
+  }
+  return NOTE_NAMES[(STRING_TUNING[stringIndex] + parseInt(fret)) % 12];
+}
+
+function notesMatch(a, b) {
+  if (!a || !b) return false;
+  const normalize = n => ENHARMONIC[n] || n;
+  return normalize(a) === normalize(b);
+}
+
+function buildFretboardSVG(voicing, rootNote) {
   const strings = voicing.strings; // array of 6: "x","0","1"-"9"
   const baseFret = voicing.baseFret || 1;
   const FRETS = 4;
@@ -50,22 +77,20 @@ function buildFretboardSVG(voicing) {
   const W = MARGIN_X * 2 + STRING_GAP * 5;
   const H = MARGIN_Y + FRET_GAP * FRETS + 10;
 
-  // Find min fret to figure out position on neck
-  const fretNums = strings.map(s => parseInt(s)).filter(n => !isNaN(n) && n > 0);
-  const minFret = fretNums.length ? Math.min(...fretNums) : 1;
-
   let circles = '';
   strings.forEach((s, i) => {
     const x = MARGIN_X + i * STRING_GAP;
     if (s === 'x') {
       circles += `<text x="${x}" y="${MARGIN_Y - 6}" text-anchor="middle" fill="#c0392b" font-size="10" font-family="sans-serif">✕</text>`;
     } else if (s === '0') {
-      circles += `<circle cx="${x}" cy="${MARGIN_Y - 7}" r="4" fill="none" stroke="#888" stroke-width="1.5"/>`;
+      const isRoot = notesMatch(noteAtString(i, '0'), rootNote);
+      circles += `<circle cx="${x}" cy="${MARGIN_Y - 7}" r="4" fill="${isRoot ? '#c0392b' : 'none'}" stroke="${isRoot ? '#c0392b' : '#888'}" stroke-width="1.5"/>`;
     } else {
       const fret = parseInt(s);
       const adjustedFret = baseFret > 1 ? fret - baseFret + 1 : fret;
       const cy = MARGIN_Y + (adjustedFret - 0.5) * FRET_GAP;
-      const isRoot = (i === strings.findIndex(v => !isNaN(parseInt(v)) && parseInt(v) > 0 && parseInt(v) === minFret));
+      const playedNote = noteAtString(i, s);
+      const isRoot = notesMatch(playedNote, rootNote);
       circles += `<circle cx="${x}" cy="${cy}" r="5" fill="${isRoot ? '#c0392b' : '#4a2000'}" stroke="${isRoot ? '#c0392b' : '#888'}" stroke-width="1"/>`;
     }
   });
