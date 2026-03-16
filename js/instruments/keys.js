@@ -10,6 +10,7 @@ async function loadChords() {
 // Chromatic scale for piano layout
 const WHITE_KEYS = ['C','D','E','F','G','A','B'];
 const BLACK_KEYS = { 'C#': 0, 'D#': 1, 'F#': 3, 'G#': 4, 'A#': 5 }; // position index among white keys
+const ENHARMONIC = { 'Bb': 'A#', 'Eb': 'D#', 'Ab': 'G#', 'Db': 'C#', 'Gb': 'F#' };
 
 function getVoicingTag(chord) {
   if (chord.type && chord.type.toLowerCase().includes('7')) return 'Shell Voicing';
@@ -78,7 +79,8 @@ function buildPianoSVG(notes, root) {
   Object.entries(BLACK_KEYS).forEach(([note, pos]) => {
     const x = pos * KEY_W + KEY_W - BLACK_W / 2;
     const isChordNote = notes.includes(note);
-    const isRootNote = note === root || note === root.replace('b', '#');
+    const rootNorm = ENHARMONIC[root] || root;
+    const isRootNote = note === root || note === rootNorm;
     const fill = isRootNote ? '#8b2020' : isChordNote ? '#7a1515' : '#1a1a1a';
     blackKeysSVG += `<rect x="${x}" y="0" width="${BLACK_W}" height="${BLACK_H}" fill="${fill}" stroke="#000" stroke-width="1"/>`;
   });
