@@ -521,3 +521,54 @@ body::after {
   font-family: var(--font-sans);
   letter-spacing: 1px;
 }
+
+/* ===== KEYS TAB ===== */
+.keys-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (min-width: 600px) {
+  .keys-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.keys-card { padding: 10px 6px; }
+.piano-svg { display: block; margin: 6px auto; }
+.keys-notes {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+.keys-voicing-tag {
+  display: inline-block;
+  font-size: 8px;
+  background: var(--accent-dark);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 1px 6px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+  margin-top: 6px;
+}
+.keys-tip {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 10px 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+.keys-tip-label {
+  display: inline-block;
+  font-size: 8px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-right: 6px;
+  font-weight: bold;
+}
