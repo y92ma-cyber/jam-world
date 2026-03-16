@@ -11,6 +11,12 @@ async function loadChords() {
 const WHITE_KEYS = ['C','D','E','F','G','A','B'];
 const BLACK_KEYS = { 'C#': 0, 'D#': 1, 'F#': 3, 'G#': 4, 'A#': 5 }; // position index among white keys
 
+function getVoicingTag(chord) {
+  if (chord.type && chord.type.toLowerCase().includes('7')) return 'Shell Voicing';
+  if (chord.notes && chord.notes.length <= 3) return 'Close Voicing';
+  return 'Open Voicing';
+}
+
 export async function renderKeys(container, state) {
   const data = await loadChords();
   container.innerHTML = '<div class="section-label">Keys — Voicings</div>';
@@ -36,7 +42,7 @@ export async function renderKeys(container, state) {
       <div class="chord-card-type">${chord.type}</div>
       ${buildPianoSVG(chord.notes, root)}
       <div class="keys-notes">${chord.notes.join(' · ')}</div>
-      <div class="keys-voicing-tag">Voicing</div>
+      <div class="keys-voicing-tag">${getVoicingTag(chord)}</div>
     `;
     grid.appendChild(card);
   });
@@ -72,7 +78,8 @@ function buildPianoSVG(notes, root) {
   Object.entries(BLACK_KEYS).forEach(([note, pos]) => {
     const x = pos * KEY_W + KEY_W - BLACK_W / 2;
     const isChordNote = notes.includes(note);
-    const fill = isChordNote ? '#7a1515' : '#1a1a1a';
+    const isRootNote = note === root || note === root.replace('b', '#');
+    const fill = isRootNote ? '#8b2020' : isChordNote ? '#7a1515' : '#1a1a1a';
     blackKeysSVG += `<rect x="${x}" y="0" width="${BLACK_W}" height="${BLACK_H}" fill="${fill}" stroke="#000" stroke-width="1"/>`;
   });
 
