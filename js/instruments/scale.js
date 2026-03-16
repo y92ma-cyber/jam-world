@@ -29,7 +29,7 @@ export async function renderScale(container, state) {
     const card = document.createElement('div');
     card.className = 'scale-card';
 
-    const noteGrid = buildNoteGrid(scale.notes);
+    const noteGrid = buildNoteGrid(scale.notes, scale.avoid || []);
 
     card.innerHTML = `
       <div class="scale-name">${scale.name}</div>
@@ -41,9 +41,13 @@ export async function renderScale(container, state) {
   });
 }
 
-function buildNoteGrid(notes) {
+function buildNoteGrid(notes, avoidNotes = []) {
   return ALL_NOTES.map(note => {
     const inScale = notes.includes(note) || notes.includes(note.replace('b','#')) || notes.includes(note.replace('#','b'));
-    return `<div class="note-cell ${inScale ? 'in-scale' : ''}">${note}</div>`;
+    const isAvoid = avoidNotes.includes(note) || avoidNotes.includes(note.replace('b','#')) || avoidNotes.includes(note.replace('#','b'));
+    let cls = '';
+    if (isAvoid) cls = 'avoid-note';
+    else if (inScale) cls = 'in-scale';
+    return `<div class="note-cell ${cls}">${note}</div>`;
   }).join('');
 }

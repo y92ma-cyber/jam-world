@@ -32,8 +32,14 @@
       {
         "name": "A Dorian",
         "notes": ["A","B","C","D","E","F#","G"],
-        "avoid": ["F#-over-F"],
+        "avoid": ["F#"],
         "description": "Funkier colour. Avoid F# when F chord is playing."
+      },
+      {
+        "name": "G Mixolydian",
+        "notes": ["G","A","B","C","D","E","F"],
+        "avoid": ["F#"],
+        "description": "Bluesy major sound over the G chord. The b7 (F) gives it edge."
       }
     ]
   },
@@ -50,6 +56,12 @@
         "notes": ["A","C","D","E","G"],
         "avoid": [],
         "description": "Works over most minor chord progressions."
+      },
+      {
+        "name": "G Mixolydian",
+        "notes": ["G","A","B","C","D","E","F"],
+        "avoid": ["F#"],
+        "description": "Bluesy major sound. The b7 (F) gives it edge over dominant chords."
       }
     ]
   }
