@@ -1,3 +1,5 @@
+import { Chord, Scale } from '@tonaljs/tonal';
+
 let scalesData = null;
 
 async function loadScales() {
@@ -16,8 +18,8 @@ export async function renderScale(container, state) {
   const activeChord = state.chords[state.activeChordIndex ?? 0] || state.chords[0];
   const progressionKey = state.chords.join(' ');
 
-  // Look up: full progression → active chord → default
-  const scaleSet = data[progressionKey] || data[activeChord] || data['default'];
+  // Look up: full progression → active chord → derived from chord → default
+  const scaleSet = data[progressionKey] || data[activeChord] || deriveScaleFromChord(activeChord) || data['default'];
 
   // Context header
   const header = document.createElement('div');
@@ -44,6 +46,54 @@ export async function renderScale(container, state) {
 }
 
 const ENHARMONIC = { 'Bb': 'A#', 'Eb': 'D#', 'Ab': 'G#', 'Db': 'C#', 'Gb': 'F#', 'A#': 'Bb', 'D#': 'Eb', 'G#': 'Ab', 'C#': 'Db', 'F#': 'Gb' };
+
+function deriveScaleFromChord(chordName) {
+  const parsed = Chord.get(chordName);
+  if (parsed.empty || !parsed.tonic) return null;
+
+  const { tonic, quality } = parsed;
+  const isAlteredDom = quality === 'Dominant Seventh' && /b9|#9|b5|b13|#11/.test(chordName);
+
+  const scaleMap = {
+    'Dominant Seventh':   isAlteredDom ? 'altered' : 'mixolydian',
+    'Major Seventh':      'major',
+    'Major':              'major',
+    'Minor Seventh':      'dorian',
+    'Minor':              'dorian',
+    'Half Diminished':    'locrian',
+    'Diminished Seventh': 'diminished',
+    'Diminished':         'diminished',
+    'Augmented':          'whole tone',
+    'Augmented Seventh':  'whole tone',
+  };
+  const scaleName = scaleMap[quality] || 'major';
+
+  const scale = Scale.get(`${tonic} ${scaleName}`);
+  if (!scale.notes?.length) return null;
+
+  // Normalize unusual Tonal enharmonics (Fb, Cb, B#, E#) not present in ALL_NOTES
+  const UNUSUAL = { 'Fb':'E','Cb':'B','B#':'C','E#':'F','Db':'C#','Ab':'G#','Gb':'F#','Eb':'D#','Bb':'A#' };
+  const normalizedNotes = scale.notes.map(n => UNUSUAL[n] || n);
+
+  const descriptions = {
+    'mixolydian':  'Major scale with b7 — classic dominant sound',
+    'altered':     'All alterations (b9 #9 b5 b13) — maximum tension',
+    'major':       'Bright and stable — home key feel',
+    'dorian':      'Minor with natural 6 — smooth, soulful',
+    'locrian':     'Half-diminished color — unstable, tense',
+    'diminished':  'Whole-half diminished — symmetric tension',
+    'whole tone':  'All whole steps — dreamy, augmented feel',
+  };
+
+  return {
+    recommended: [{
+      name:        `${tonic} ${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`,
+      description: descriptions[scaleName] || '',
+      notes:       normalizedNotes,
+      avoid:       [],
+    }]
+  };
+}
 
 function buildNoteGrid(notes, avoidNotes = []) {
   return ALL_NOTES.map(note => {
