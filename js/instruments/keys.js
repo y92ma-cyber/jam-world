@@ -1,3 +1,5 @@
+import { Chord } from '@tonaljs/tonal';
+
 let chordsData = null;
 
 async function loadChords() {
@@ -18,6 +20,11 @@ function getVoicingTag(chord) {
   return 'Open Voicing';
 }
 
+function getVoicingTagFromQuality(quality) {
+  if (quality && quality.toLowerCase().includes('seventh')) return 'Shell Voicing';
+  return 'Close Voicing';
+}
+
 export async function renderKeys(container, state) {
   const data = await loadChords();
   container.innerHTML = '<div class="section-label">Keys — Voicings</div>';
@@ -31,7 +38,25 @@ export async function renderKeys(container, state) {
     card.className = 'chord-card keys-card';
 
     if (!chord) {
-      card.innerHTML = `<div class="chord-card-name">${chordName}</div><div class="chord-card-type">—</div>`;
+      const parsed = Chord.get(chordName);
+      if (parsed.empty || !parsed.tonic || !parsed.notes?.length) {
+        card.innerHTML = `<div class="chord-card-name">${chordName}</div><div class="chord-card-type">Unknown chord</div>`;
+        grid.appendChild(card);
+        return;
+      }
+      // Normalize: Tonal returns flat spellings (Bb, Eb) but buildPianoSVG BLACK_KEYS uses sharps (A#, D#)
+      // ENHARMONIC is already defined at module scope in this file: { 'Bb':'A#', 'Eb':'D#', ... }
+      const normalizedNotes = parsed.notes.map(n => ENHARMONIC[n] || n);
+      const root = ENHARMONIC[parsed.tonic] || parsed.tonic;
+      const typeLabel = parsed.aliases[0] || parsed.quality || '?';
+
+      card.innerHTML = `
+        <div class="chord-card-name">${chordName}</div>
+        <div class="chord-card-type">${typeLabel} (tonal)</div>
+        ${buildPianoSVG(normalizedNotes, root)}
+        <div class="keys-notes">${parsed.notes.join(' · ')}</div>
+        <div class="keys-voicing-tag">${getVoicingTagFromQuality(parsed.quality)}</div>
+      `;
       grid.appendChild(card);
       return;
     }
