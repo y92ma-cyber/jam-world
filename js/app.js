@@ -1,6 +1,7 @@
 import { initChords } from './chords.js';
 import { initTabs } from './tabs.js';
 import { storage, generateId } from './storage.js';
+import { handlePrint } from './print.js';
 
 const DEFAULT_SESSION = {
   name: 'New Session',
@@ -106,5 +107,6 @@ function showLoadModal(sessions) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initStorage();
+  document.getElementById('btn-print').onclick = () => handlePrint(state);
   render();
 });
