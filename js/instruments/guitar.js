@@ -1,4 +1,6 @@
 // js/instruments/guitar.js
+import { Chord } from '@tonaljs/tonal';
+
 let chordsData = null;
 
 async function loadChords() {
@@ -21,7 +23,20 @@ export async function renderGuitar(container, state) {
     card.className = 'chord-card';
 
     if (!chord) {
-      card.innerHTML = `<div class="chord-card-name">${chordName}</div><div class="chord-card-type">—</div><p style="color:var(--text-dim);font-size:11px;font-family:var(--font-sans)">No data</p>`;
+      const fallback = findClosestDbChord(chordName, data);
+      if (!fallback) {
+        card.innerHTML = `<div class="chord-card-name">${chordName}</div><div class="chord-card-type" style="color:var(--text-dim)">No voicing available</div>`;
+        grid.appendChild(card);
+        return;
+      }
+      const fVoicing = fallback.chord.voicings[0];
+      const fRoot = fallback.chord.notes[0];
+      card.innerHTML = `
+        <div class="chord-card-name">${chordName}</div>
+        <div class="chord-card-type">${chordName}</div>
+        ${buildFretboardSVG(fVoicing, fRoot)}
+        <div class="chord-card-voicing-label">${fVoicing.label} (approx.)</div>
+      `;
       grid.appendChild(card);
       return;
     }
@@ -51,6 +66,36 @@ const STRING_TUNING = [4, 9, 14, 19, 23, 28]; // E=4, A=9, D=14, G=19, B=23, e=2
 const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 // Enharmonic equivalents
 const ENHARMONIC = { 'Bb': 'A#', 'Eb': 'D#', 'Ab': 'G#', 'Db': 'C#', 'Gb': 'F#' };
+
+// Maps Tonal sharp outputs to flat roots used in chords.json
+const SHARP_TO_FLAT = { 'A#':'Bb','D#':'Eb','G#':'Ab','C#':'Db','F#':'Gb' };
+
+function findClosestDbChord(chordName, data) {
+  const parsed = Chord.get(chordName);
+  if (parsed.empty || !parsed.tonic) return null;
+
+  const { quality } = parsed;
+  const root = SHARP_TO_FLAT[parsed.tonic] || parsed.tonic;
+
+  const priorities = {
+    'Dominant Seventh':   [root+'7',    root,      root+'maj7', root+'m'  ],
+    'Major Seventh':      [root+'maj7', root,      root+'7',    root+'m'  ],
+    'Major':              [root,        root+'maj7',root+'7',   root+'m'  ],
+    'Minor Seventh':      [root+'m7',   root+'m',  root,        root+'7'  ],
+    'Minor':              [root+'m',    root+'m7', root,        root+'7'  ],
+    'Half Diminished':    [root+'m7',   root+'m',  root                   ],
+    'Diminished Seventh': [root+'m',    root+'m7', root                   ],
+    'Diminished':         [root+'m',    root+'m7', root                   ],
+    'Augmented':          [root,        root+'m',  root+'maj7'            ],
+    'Augmented Seventh':  [root+'7',    root,      root+'m'               ],
+  };
+
+  const candidates = priorities[quality] || [root, root+'m', root+'7', root+'maj7'];
+  for (const key of candidates) {
+    if (data[key]) return { chord: data[key], fallbackKey: key };
+  }
+  return null;
+}
 
 function noteAtString(stringIndex, fret) {
   if (fret === 'x' || fret === '0') {
