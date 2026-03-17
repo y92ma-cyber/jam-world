@@ -1,5 +1,6 @@
 // js/chords.js
-import { state, setState } from './app.js';
+import { Chord } from '@tonaljs/tonal';
+import { state, setState, showToast } from './app.js';
 import { renderActiveTab } from './tabs.js';
 
 export function initChords() {
@@ -37,8 +38,10 @@ function renderPills() {
       pressTimer = setTimeout(() => {
         const newChord = prompt('Edit chord:', chord);
         if (newChord && newChord.trim()) {
+          const trimmed = newChord.trim();
+          if (Chord.get(trimmed).empty) showToast(`"${trimmed}" — unrecognized, updated anyway`);
           const chords = [...state.chords];
-          chords[i] = newChord.trim();
+          chords[i] = trimmed;
           setState({ chords });
           renderActiveTab();
         }
@@ -61,10 +64,11 @@ function renderPills() {
 }
 
 function promptAddChord() {
-  const input = prompt('Enter chord (e.g. Am, F, Cmaj7, G7):');
+  const input = prompt('Enter chord (e.g. Am, F, Cmaj7, C7b9):');
   if (!input) return;
   const chord = input.trim();
   if (!chord) return;
+  if (Chord.get(chord).empty) showToast(`"${chord}" — unrecognized, added anyway`);
   setState({ chords: [...state.chords, chord] });
   renderActiveTab();
 }
