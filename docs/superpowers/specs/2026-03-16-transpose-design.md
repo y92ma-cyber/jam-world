@@ -30,6 +30,7 @@ A dedicated **KEY row** between the chord bar and the meta-bar. Two buttons (`âˆ
 /* ===== TRANSPOSE BAR ===== */
 .transpose-bar {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 10px;
   padding: 6px 14px;
@@ -47,6 +48,7 @@ A dedicated **KEY row** between the chord bar and the meta-bar. Two buttons (`âˆ
 .transpose-btn {
   background: var(--bg-card);
   border: 1px solid var(--border);
+  border-radius: 0;
   color: var(--text);
   width: 26px;
   height: 22px;
@@ -58,7 +60,8 @@ A dedicated **KEY row** between the chord bar and the meta-bar. Two buttons (`âˆ
   align-items: center;
   justify-content: center;
 }
-.transpose-btn:hover { border-color: var(--accent); color: var(--accent); }
+.transpose-btn:hover,
+.transpose-btn:active { border-color: var(--accent); color: var(--accent); }
 .transpose-display {
   width: 32px;
   text-align: center;
@@ -80,7 +83,7 @@ A dedicated **KEY row** between the chord bar and the meta-bar. Two buttons (`âˆ
 
 ## State
 
-Add `transposeOffset: 0` to `DEFAULT_SESSION` in `js/app.js`. It is saved and restored with sessions.
+Add `transposeOffset: 0` to `DEFAULT_SESSION` in `js/app.js`. It is saved and restored with sessions. Old sessions that predate this field will load with `state.transposeOffset === undefined`; all code uses `?? 0` as a fallback guard. `handleNew` resets to `DEFAULT_SESSION` via `Object.assign`, which covers `transposeOffset` automatically â€” no additional change needed there.
 
 ## Transposition Algorithm
 
@@ -147,24 +150,45 @@ export function initTranspose() {
   document.getElementById('btn-transpose-up').onclick   = () => handleTranspose(+1);
   updateDisplay(state.transposeOffset ?? 0);
 }
+
+export { updateDisplay };
 ```
 
 ## Changes to `js/app.js`
 
 1. Add `transposeOffset: 0` to `DEFAULT_SESSION`
-2. Import `initTranspose` and call it once in `DOMContentLoaded`:
+2. Import `initTranspose` and `updateDisplay`, call `initTranspose()` once in `DOMContentLoaded`, and call `updateDisplay(state.transposeOffset ?? 0)` inside `render()` so the counter is refreshed whenever a session loads:
    ```js
-   import { initTranspose } from './transpose.js';
+   import { initTranspose, updateDisplay } from './transpose.js';
+
+   // inside render():
+   updateDisplay(state.transposeOffset ?? 0);
+
    // in DOMContentLoaded:
    initTranspose();
    ```
+
+   **Why `updateDisplay` in `render()`:** `render()` is called after every `setState` â€” including session loads. Without this call, loading a saved session with `transposeOffset: 3` would restore the state correctly but leave the `#transpose-display` element showing `0`.
 
 ## What Does NOT Change
 
 - `data/chords.json`, `data/scales.json` â€” no edits
 - Instrument renderers â€” no edits (they use `state.chords` which is already transposed)
 - `js/chords.js` â€” no edits
-- `css/style.css` only gets the new transpose bar block appended
+- `css/style.css` gets the new transpose bar block appended, **plus** `.transpose-bar` added to the existing print `display: none` rule. The first print `@media` block contains:
+  ```css
+  .bottom-bar, .modal-overlay, .chord-add { display: none !important; }
+  ```
+  Change it to:
+  ```css
+  .bottom-bar, .modal-overlay, .chord-add, .transpose-bar { display: none !important; }
+  ```
+
+## Notes
+
+- The `âˆ’` button label is the Unicode minus sign U+2212, not a hyphen-minus. Copy from this spec carefully.
+- `transposeOffset` is an unbounded accumulator (no clamping). Pressing `+` twelve times correctly shows `+12` and the chords are back where they started.
+- The `âˆ’` in the display (for negative values) comes from `${offset}` which produces the standard minus sign `-`.
 
 ## Commit
 
