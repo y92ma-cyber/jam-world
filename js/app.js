@@ -54,7 +54,7 @@ function handleNew() {
   render();
 }
 
-function showToast(msg) {
+export function showToast(msg) {
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.textContent = msg;
