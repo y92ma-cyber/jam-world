@@ -2,6 +2,7 @@ import { initChords } from './chords.js';
 import { initTabs } from './tabs.js';
 import { storage, generateId } from './storage.js';
 import { handlePrint } from './print.js';
+import { initTranspose, updateDisplay } from './transpose.js';
 
 const DEFAULT_SESSION = {
   name: 'New Session',
@@ -9,6 +10,7 @@ const DEFAULT_SESSION = {
   style: 'funk',
   bpm: 92,
   timeSignature: '4/4',
+  transposeOffset: 0,
 };
 
 export let state = { ...DEFAULT_SESSION };
@@ -24,6 +26,7 @@ function render() {
   document.getElementById('bpm-input').value = state.bpm;
   initChords();
   initTabs();
+  updateDisplay(state.transposeOffset ?? 0);
 }
 
 export function initStorage() {
@@ -107,6 +110,7 @@ function showLoadModal(sessions) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initStorage();
+  initTranspose();
   document.getElementById('btn-print').onclick = () => handlePrint(state);
   render();
 });
